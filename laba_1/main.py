@@ -70,7 +70,7 @@ def main() -> None:
     show_results(original)
 
     # часть б: возраста из файла.
-    ages = read_array('data.txt')
+    ages = read_array('laba_1/data.txt')
     print('\nчасть б. количество возрастов:', len(ages))
     show_results(ages, unique=True)
 

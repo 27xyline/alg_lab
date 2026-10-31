@@ -36,5 +36,5 @@ uv sync
 ## 4. Запустить проект
 
 ```bash
-uv run main.py
+uv run laba_1/main.py
 ```
