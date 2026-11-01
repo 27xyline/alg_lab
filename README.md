@@ -37,4 +37,5 @@ uv sync
 
 ```bash
 uv run laba_1/main.py
+uv run laba_3/main.py
 ```
