@@ -3,9 +3,8 @@ import math
 from pathlib import Path
 
 import matplotlib
-import matplotlib.pyplot as plt
-
 matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 
 
 A = 0.0
@@ -61,33 +60,21 @@ def main():
     rk_values = runge_kutta(x_values)
 
     with open(folder / "results.csv", "w", newline="", encoding="utf-8-sig") as file:
-        writer = csv.writer(file)
+        writer = csv.writer(file, lineterminator="\n")
         writer.writerow(["x", "y_exact", "y_euler", "y_rk4"])
 
         for i in range(len(x_values)):
             writer.writerow([
-                f"{x_values[i]:.12f}",
-                f"{exact_values[i]:.12f}",
-                f"{euler_values[i]:.12f}",
-                f"{rk_values[i]:.12f}",
+                f"{x_values[i]:.6f}",
+                f"{exact_values[i]:.6f}",
+                f"{euler_values[i]:.6f}",
+                f"{rk_values[i]:.6f}",
             ])
 
-    # Строим точную кривую и численные решения.
-    smooth_x = [A + (B - A) * i / 500 for i in range(501)]
-    smooth_y = [exact(x) for x in smooth_x]
-
-    plt.rcParams["font.family"] = "DejaVu Sans"
-    plt.figure(figsize=(9, 5.5))
-    plt.plot(smooth_x, smooth_y, label="Точное решение", linewidth=2.4)
-    plt.plot(x_values, euler_values, "o--", label="Метод Эйлера", markersize=3.5)
-    plt.plot(x_values, rk_values, "s-", label="Рунге — Кутта 4-го порядка", markersize=3)
-    plt.xlabel("x")
-    plt.ylabel("y(x)")
-    plt.title("Численное решение задачи Коши, h = 0,05")
-    plt.grid(True, alpha=0.3)
-    plt.legend()
-    plt.tight_layout()
-    plt.savefig(folder / "solution_plot.png", dpi=180)
+    plt.plot(x_values, exact_values)
+    plt.plot(x_values, euler_values)
+    plt.plot(x_values, rk_values)
+    plt.savefig(folder / "solution_plot.png")
     plt.close()
 
     exact_b = exact(B)
