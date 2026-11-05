@@ -74,6 +74,7 @@ def main():
     plt.plot(x_values, exact_values, label="Точное решение")
     plt.plot(x_values, euler_values, label="Метод Эйлера")
     plt.plot(x_values, rk_values, label="Метод Рунге — Кутты 4-го порядка")
+    plt.title("Сравнение решений задачи Коши")
     plt.xlabel("x")
     plt.ylabel("y(x)")
     plt.legend()
