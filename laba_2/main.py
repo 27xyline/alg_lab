@@ -71,9 +71,12 @@ def main():
                 f"{rk_values[i]:.6f}",
             ])
 
-    plt.plot(x_values, exact_values)
-    plt.plot(x_values, euler_values)
-    plt.plot(x_values, rk_values)
+    plt.plot(x_values, exact_values, label="Точное решение")
+    plt.plot(x_values, euler_values, label="Метод Эйлера")
+    plt.plot(x_values, rk_values, label="Метод Рунге — Кутты 4-го порядка")
+    plt.xlabel("x")
+    plt.ylabel("y(x)")
+    plt.legend()
     plt.savefig(folder / "solution_plot.png")
     plt.close()
 
