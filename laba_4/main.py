@@ -1,5 +1,4 @@
-"""Корреляционный и регрессионный анализ данных лабораторной работы № 4."""
-
+from collections.abc import Sequence
 from pathlib import Path
 from statistics import mean
 
@@ -8,7 +7,7 @@ import matplotlib.pyplot as plt
 RESULTS = Path(__file__).resolve().parent / "results"
 
 
-def regression(x, y):
+def regression(x: Sequence[float], y: Sequence[float]) -> tuple[float, float, float, float, float, float, float]:
     """Ковариация и СКО рассчитаны с делением на n; МНК — с константой."""
     x_mean, y_mean = mean(x), mean(y)
     dx = [value - x_mean for value in x]
@@ -22,7 +21,17 @@ def regression(x, y):
     return sxy / len(x), (sxx / len(x)) ** 0.5, (syy / len(y)) ** 0.5, r, slope, intercept, r**2
 
 
-def plot(x, y, slope, intercept, title, xlabel, ylabel, filename, forecast=None):
+def plot(
+    x: Sequence[float],
+    y: Sequence[float],
+    slope: float,
+    intercept: float,
+    title: str,
+    xlabel: str,
+    ylabel: str,
+    filename: str,
+    forecast: float | None = None,
+) -> None:
     fig, ax = plt.subplots(figsize=(9, 5))
     ax.scatter(x, y, label="Наблюдения")
     start, end = min(x), forecast if forecast is not None else max(x)
@@ -42,7 +51,7 @@ def plot(x, y, slope, intercept, title, xlabel, ylabel, filename, forecast=None)
     plt.close(fig)
 
 
-def main():
+def main() -> None:
     RESULTS.mkdir(exist_ok=True)
     x1 = [3.9, 6.5, 3.7, 4.5, 5.0, 5.8, 3.3, 6.2, 3.6, 3.9, 5.1, 6.4,
           4.2, 4.9, 6.0, 5.4, 4.4, 3.8, 6.7, 4.6, 4.3, 6.3, 5.2, 6.4,

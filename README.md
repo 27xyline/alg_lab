@@ -39,4 +39,5 @@ uv sync
 uv run laba_1/main.py
 uv run laba_2/main.py
 uv run laba_3/main.py
+uv run laba_4/main.py
 ```
