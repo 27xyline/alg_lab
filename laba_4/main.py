@@ -36,11 +36,10 @@ def plot(
     ax.scatter(x, y, label="Наблюдения")
     start, end = min(x), forecast if forecast is not None else max(x)
     ax.plot([start, end], [slope * start + intercept, slope * end + intercept],
-            color="crimson", label=f"Регрессия: y = {slope:.3f}x {intercept:+.3f}")
+            color="crimson", label=f"Регрессия: y = {slope:.3f}t {intercept:+.3f}")
     if forecast is not None:
         ax.scatter([forecast], [slope * forecast + intercept], color="darkorange",
                    marker="*", s=140, label="Прогноз на 2022 год", zorder=3)
-        ax.plot(x, y, color="steelblue", alpha=0.4)
         r2 = regression(x, y)[-1]
         ax.text(0.03, 0.95, f"R² = {r2:.4f}", transform=ax.transAxes, va="top")
     ax.set(title=title, xlabel=xlabel, ylabel=ylabel)
@@ -61,7 +60,7 @@ def main() -> None:
           56, 46, 41, 43, 58, 60, 61, 55, 46, 53, 51, 56]
     x2 = [18, 22, 35, 28, 36, 24, 32, 38, 52, 46, 48, 54]
     y2 = [36, 47, 50, 44, 52, 48, 55, 51, 56, 60, 58, 65]
-    years = list(range(2011, 2022))
+    periods = list(range(1, 12))  # 1 — 2011 год, 11 — 2021 год
     tourists = [13062, 14019, 14583, 15590, 20135, 20534, 25292, 28074, 28302, 27328, 28979]
 
     cov, sx, sy, r, a, b, r2 = regression(x1, y1)
@@ -75,12 +74,12 @@ def main() -> None:
     print(f"Для дохода 70 млн руб. затраты = {(70 - b) / a:.4f} тыс. руб.")
     plot(x2, y2, a, b, "Расходы на рекламу и доход", "Расходы, тыс. руб.", "Доход, млн руб.", "task2.png")
 
-    _, _, _, _, a, b, r2 = regression(years, tourists)
-    forecast = a * 2022 + b
-    print(f"\nЗадание 3: y = {a:.4f} × год {b:+.4f}, R² = {r2:.4f}")
+    _, _, _, _, a, b, r2 = regression(periods, tourists)
+    forecast = a * 12 + b
+    print(f"\nЗадание 3: y = {a:.4f} × t {b:+.4f}, R² = {r2:.4f}")
     print(f"Прогноз на 2022 год = {forecast:.2f} тыс. чел.")
     print(f"Относительная погрешность = {abs(forecast - 29547) / 29547 * 100:.2f}%")
-    plot(years, tourists, a, b, "Численность размещённых туристов", "Год", "Туристы, тыс. чел.", "task3.png", 2022)
+    plot(periods, tourists, a, b, "Численность размещённых туристов", "Период (1 — 2011 год)", "Туристы, тыс. чел.", "task3.png", 12)
 
 
 if __name__ == "__main__":
